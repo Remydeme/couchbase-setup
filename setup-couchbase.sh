@@ -170,7 +170,7 @@ InitCluster() {
 
   CParams=""
   Services="--services data,query"
-  Output=$(printf "\t-\033[0;36mquery\033[0m\n\t-\033[0;36mdata \033[0m\t\t%sMb" "$RamSize")
+  Output=$(printf "\t- \033[0;36mquery\033[0m\n\t- \033[0;36mdata \033[0m\t\t%sMb" "$RamSize")
 
   if [ $FTSRamSize -gt 0 ]; then
     CParams="$CParams --cluster-fts-ramsize $FTSRamSize"
@@ -183,7 +183,7 @@ InitCluster() {
   if [ $IndexRamSize -gt 0 ]; then
     CParams="$CParams --cluster-index-ramsize $IndexRamSize"
     Services="$Services,index"
-    Output=$(printf "%s\n\t- \033[0;36mindex \033[0m\t\t%sMb" "$Output" "$IndexRamSize")
+    Output=$(printf "%s\n\t- \033[0;36mindex \033[0m\t%sMb" "$Output" "$IndexRamSize")
   else
     Output=$(printf "%s\n\t- \033[0;37mindex\033[0m" "$Output")
   fi
