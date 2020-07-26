@@ -175,25 +175,33 @@ InitCluster() {
   if [ $FTSRamSize -gt 0 ]; then
     CParams="$CParams --cluster-fts-ramsize $FTSRamSize"
     Services="$Services,fts"
-    Output=$(printf "%s\n\t-\033[0;36mfts \033[0m\t\t%sMb" "$Output" "$FTSRamSize")
+    Output=$(printf "%s\n\t- \033[0;36mfts \033[0m\t\t%sMb" "$Output" "$FTSRamSize")
+  else
+    Output=$(printf "%s\n\t- \033[0;37mfts\033[0m" "$Output")
   fi
 
   if [ $IndexRamSize -gt 0 ]; then
     CParams="$CParams --cluster-index-ramsize $IndexRamSize"
     Services="$Services,index"
-    Output=$(printf "%s\n\t-\033[0;36mindex \033[0m\t\t%sMb" "$Output" "$IndexRamSize")
+    Output=$(printf "%s\n\t- \033[0;36mindex \033[0m\t\t%sMb" "$Output" "$IndexRamSize")
+  else
+    Output=$(printf "%s\n\t- \033[0;37mindex\033[0m" "$Output")
   fi
 
   if [ $EventRamSize -gt 0 ]; then
     CParams="$CParams --cluster-eventing-ramsize $EventRamSize"
     Services="$Services,eventing"
-    Output=$(printf "%s\n\t-\033[0;36meventing \033[0m\t%sMb" "$Output" "$EventRamSize")
+    Output=$(printf "%s\n\t- \033[0;36meventing \033[0m\t%sMb" "$Output" "$EventRamSize")
+  else
+    Output=$(printf "%s\n\t- \033[0;37meventing\033[0m" "$Output")
   fi
 
   if [ $AnalyticsRamSize -gt 0 ]; then
     CParams="$CParams --cluster-analytics-ramsize $AnalyticsRamSize"
     Services="$Services,analytics"
-    Output=$(printf "%s\n\t-\033[0;36manalytics \033[0m\t%sMb" "$Output" "$AnalyticsRamSize")
+    Output=$(printf "%s\n\t- \033[0;36manalytics \033[0m\t%sMb" "$Output" "$AnalyticsRamSize")
+  else
+    Output=$(printf "%s\n\t- \033[0;37manalytics\033[0m" "$Output")
   fi
 
   couchbase-cli cluster-init -c 127.0.0.1:${Port} \
