@@ -384,7 +384,7 @@ addBuckets() {
     i=$((i + 5))
   done
 
-  printf " \033[0m%s%s of total \033[0;32m(%sMb  available)\033[0m\n" "$TotalPercent" "%" "$(( (100-TotalPercent)*RamSize/100 ))"
+  printf " \033[0m%s%s of total \033[0;32m(%sMb available)\033[0m\n" "$TotalPercent" "%" "$(( (100-TotalPercent)*RamSize/100 ))"
 }
 
 # Parse command-line arguments.
