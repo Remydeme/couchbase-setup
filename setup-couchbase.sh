@@ -214,7 +214,7 @@ addBuckets() {
 
   printf "→ \033[0;33mAdding buckets (\033[0m%s/%s\033[0;33m)...\033[0m" "$CurrentlyAdded" "$BucketsCount"
 
-  for BucketName in $(jq -re '.resources.buckets | keys | join(" ")' <"config.json"); do
+  for BucketName in $(jq -re '.resources.buckets | keys | join(" ")' <"$ConfigFile"); do
     Extra=""
 
     BucketType=$(jq -re ".resources.buckets.${BucketName}.type // empty" <"$ConfigFile")

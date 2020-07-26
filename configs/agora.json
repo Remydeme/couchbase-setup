@@ -1,0 +1,25 @@
+{
+  "name": "agora-database",
+  "config": {
+    "port": 2050,
+    "username": "Administrator",
+    "password": "password"
+  },
+  "resources": {
+    "ramSize": 1024,
+    "ftsRamSize": 1024,
+    "eventRamSize": 512,
+    "indexRamSize": 1024,
+    "buckets": {
+      "improve_requests": {
+        "size": 33
+      },
+      "improve_suggestions": {
+        "size": 33
+      },
+      "posts_tags": {
+        "size": 10
+      }
+    }
+  }
+}
