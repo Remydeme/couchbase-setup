@@ -51,7 +51,7 @@ ReadConfigurationFile() {
   AnalyticsRamSize=$(jq -re '.resources.analyticsRamSize // empty' <"$ConfigFile")
   BucketsCount=$(jq -re '.resources.buckets // empty | length' <"$ConfigFile")
 
-  Port=${Port:=8080}
+  Port=${Port:=8091}
   Ttl=${Ttl:=15}
   RamSize=${RamSize:=256}
   FTSRamSize=${FTSRamSize:=0}
