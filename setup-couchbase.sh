@@ -113,7 +113,6 @@ ReadConfigurationFile() {
 
 KillOldInstances() {
   printf "→ \033[0;33mKilling old docker instances of \033[0m%s\033[0;33m...\033[0m" "$DBName"
-  docker kill "$DBName" >/dev/null 2>&1
   InstancesCount="$(docker ps -aq -f name="agora-database" | wc -l)"
 
   if [ "$InstancesCount" -ne 0 ]; then
