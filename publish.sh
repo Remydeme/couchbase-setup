@@ -13,12 +13,12 @@ for ARGUMENT in "$@"; do
 done
 
 if [ -z "$Commit" ]; then
-  printf "\033[0;31mMissing commit message !\033[0m"
+  printf "\033[0;31mMissing commit message !\033[0m\n"
   exit
 fi
 
 if [ -z "$Version" ]; then
-  printf "\033[0;31mMissing commit version !\033[0m"
+  printf "\033[0;31mMissing commit version !\033[0m\n"
   exit
 fi
 
