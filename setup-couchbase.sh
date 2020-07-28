@@ -2,9 +2,10 @@
 
 # Add couchbase-cli to path.
 export PATH=$PATH:/Applications/Couchbase\ Server.app/Contents/Resources/couchbase-core/bin
+DIR="$(cd "$(dirname "$0")" && pwd)"
 
 # Constants
-tag=$(git describe --tags)
+tag=$(jq -re '.version // empty' < "${DIR}/meta.json")
 
 # Variables.
 ConfigFile=""
