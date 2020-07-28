@@ -1,0 +1,2 @@
+PATH=~/bin:/usr/local/Cellar/go/1.14.2_1/libexec/bin:/Users/kushuh/go/bin:/Users/kushuh/.rvm/gems/ruby-2.6.3/bin:/Users/kushuh/.rvm/gems/ruby-2.6.3@global/bin:/Users/kushuh/.rvm/rubies/ruby-2.6.3/bin:/usr/local/opt/bison/bin:/usr/local/opt/bison/bin:/Users/kushuh/Desktop/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Users/kushuh/.rvm/bin
+alias couchbase-jc='couchbase-setup.sh'

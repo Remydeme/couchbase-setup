@@ -1,19 +1,70 @@
-DIR=$(pwd)
+#!/bin/sh
 
-cd ~ || (printf "\033\0;31mUnable to open root folder : please make sure you run this script with admin right.\033[0m\nrun : sudo sh install.sh\n" && exit)
+alias="alias couchbase-jc='sh ~/bin/couchbase-jc/setup-couchbase.sh'"
+exportPath="PATH=~/bin:$PATH"
 
 printf "\033[0;36mInstalling couchbase-jc...\033[0m\n"
+
+printf "Installing dependencies..."
+
+installer=""
+
+if ! command -v apt-get > /dev/null; then
+  installer="sudo apt-get install"
+elif ! command -v dnf > /dev/null; then
+  installer="sudo dnf install"
+elif ! command -v zypper > /dev/null; then
+  installer="sudo zypper install"
+elif ! command -v pacman > /dev/null; then
+  installer="sudo pacman -S"
+elif ! command -v brew > /dev/null; then
+  installer="brew install"
+elif ! command -v port > /dev/null; then
+  installer="port install"
+fi
+  printf "\r\033[K"
+
+if ! required_cmd="$(type "jq")" || [ -z "$required_cmd" ]; then
+  if [ -n "$installer" ]; then
+    eval "${installer} jq"
+  else
+    printf "\033[0;31mCouldn't find any available installer. Install jq on your own, from https://stedolan.github.io/jq/download/\033[0m\n"
+  fi
+fi
+
+printf "\033[0;32mSuccessfully installed dependencies.\033[0m\n"
+
 printf "Copying files..."
 
-mkdir ~/bin/couchbase-jc
-cd ~/bin/couchbase-jc || (printf "\033[0;31mCouldn't move to bin folder. Exiting installer...\033[0m\n" && exit)
+(rm -rf ~/bin/couchbase-jc && mkdir -p ~/bin/couchbase-jc >/dev/null 2>&1) ||
+  (printf "\r\033[K\033[0;31mCouldn't move to bin folder. Exiting installer...\033[0m\n" && exit)
 
-curl https://github.com/a-novel/couchbase-setup/blob/master/meta.json --output meta.json
-curl https://github.com/a-novel/couchbase-setup/blob/master/setup-couchbase.sh --output setup-couchbase.sh
+curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/meta.json --output ~/bin/couchbase-jc/meta.json >/dev/null 2>&1
+curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/setup-couchbase.sh --output ~/bin/couchbase-jc/setup-couchbase.sh >/dev/null 2>&1
+chmod +x ~/bin/couchbase-jcsetup-couchbase.sh >/dev/null 2>&1
 
-touch .bash_profile
-echo "PATH=~/bin:$PATH" > ".bash_profile"
-echo "alias couchbase-jc='couchbase-setup.sh'" >> ".bash_profile"
+if ! [ -e ~/.bash_profile ]; then
+  touch ~/.bash_profile
+fi
 
-cd "$DIR" || exit
-printf "\r\033[K\o3[0;33mSetup complete !\033[0m\nYou can now use couchbase-jc in your local terminal."
+if ! [ -e ~/.zshrc ]; then
+  touch ~/.zshrc
+fi
+
+if ! grep -Fxq "$exportPath" ~/.bash_profile; then
+  echo "$exportPath" >>~/.bash_profile
+fi
+
+if ! grep -Fxq "$exportPath" ~/.zshrc; then
+  echo "$exportPath" >>~/.zshrc
+fi
+
+if ! grep -Fxq "$alias" ~/.bash_profile; then
+  echo "$alias" >>~/.bash_profile
+fi
+
+if ! grep -Fxq "$alias" ~/.zshrc; then
+  echo "$alias" >>~/.zshrc
+fi
+
+printf "\r\033[K\033[0;32mSetup complete !\033[0m\nYou can now use couchbase-jc in your local terminal.\n"

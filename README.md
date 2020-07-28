@@ -1,4 +1,4 @@
-# Couchbase Setup
+# Couchbase JSON configurator
 
 A shell utility for UNIX systems to quickly configure a couchbase docker instance
 from a JSON file.
@@ -9,15 +9,19 @@ from a JSON file.
 
 ## Prerequisites
 
-You need a UNIX machine, with both [Docker](https://www.docker.com/products/docker-desktop)
-and [jq](https://stedolan.github.io/jq/download/) installed.
+You need a UNIX machine, with [Docker](https://www.docker.com/products/docker-desktop) installed.
+
+Once you have Docker running, download and execute the installer.
+
+```cgo
+curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/install.sh -L -O && \
+sh install.sh
+```
 
 ## How to use
 
-Locate the script and your JSON configuration file, then run the following command :
-
 ```cgo
-$ sh /path/to/setup-couchbase.sh --config-file="/path/to/config.json"
+$ couchbase-jc --config-file="/path/to/config.json"
 ```
 
 ## Config file
