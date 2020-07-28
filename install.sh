@@ -1,7 +1,7 @@
 #!/bin/sh
 
 alias="alias couchbase-jc='sh ~/bin/couchbase-jc/setup-couchbase.sh'"
-exportPath="PATH=\"~/bin:$PATH\""
+exportPath='export PATH="~/bin:$PATH"'
 
 printf "\033[0;36mInstalling couchbase-jc...\033[0m\n"
 
@@ -9,20 +9,20 @@ printf "Installing dependencies..."
 
 installer=""
 
-if ! command -v apt-get > /dev/null; then
+if ! command -v apt-get >/dev/null; then
   installer="sudo apt-get install"
-elif ! command -v dnf > /dev/null; then
+elif ! command -v dnf >/dev/null; then
   installer="sudo dnf install"
-elif ! command -v zypper > /dev/null; then
+elif ! command -v zypper >/dev/null; then
   installer="sudo zypper install"
-elif ! command -v pacman > /dev/null; then
+elif ! command -v pacman >/dev/null; then
   installer="sudo pacman -S"
-elif ! command -v brew > /dev/null; then
+elif ! command -v brew >/dev/null; then
   installer="brew install"
-elif ! command -v port > /dev/null; then
+elif ! command -v port >/dev/null; then
   installer="port install"
 fi
-  printf "\r\033[K"
+printf "\r\033[K"
 
 if ! required_cmd="$(type "jq")" || [ -z "$required_cmd" ]; then
   if [ -n "$installer" ]; then
@@ -52,12 +52,10 @@ if ! [ -e ~/.zshrc ]; then
 fi
 
 # Remove obsolete lines.
-curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/old.sh -L -O >/dev/null 2>&1 && sh old.sh > old.txt
-rm old.sh
-
-grep -Ffvx old.txt ~/.bash_profile > tmp && mv tmp ~/.bash_profile
-grep -Ffvx old.txt ~/.zshrc > tmp && mv tmp ~/.zshrc
-rm old.txt
+grep -v "^PATH" ~/.bash_profile >tmp.txt && mv tmp.txt ~/.bash_profile
+grep -v "^export PATH=\"~/bin" ~/.bash_profile >tmp.txt && mv tmp.txt ~/.bash_profile
+grep -v "^PATH" ~/.zshrc >tmp.txt && mv tmp.txt ~/.zshrc
+grep -v "^export PATH=\"~/bin" ~/.zshrc >tmp.txt && mv tmp.txt ~/.zshrc
 
 if ! grep -Fxq "$exportPath" ~/.bash_profile; then
   echo "$exportPath" >>~/.bash_profile
