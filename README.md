@@ -15,7 +15,8 @@ Once you have Docker running, download and execute the installer.
 
 ```cgo
 curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/install.sh -L -O && \
-sh install.sh
+sh install.sh && \
+rm install.sh
 ```
 
 ## How to use
