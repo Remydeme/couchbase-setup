@@ -1,7 +1,7 @@
 #!/bin/sh
 
 alias="alias couchbase-jc='sh ~/bin/couchbase-jc/setup-couchbase.sh'"
-exportPath="PATH=~/bin:$PATH"
+exportPath="PATH=\"~/bin:$PATH\""
 
 printf "\033[0;36mInstalling couchbase-jc...\033[0m\n"
 
@@ -50,6 +50,14 @@ fi
 if ! [ -e ~/.zshrc ]; then
   touch ~/.zshrc
 fi
+
+# Remove obsolete lines.
+curl https://raw.githubusercontent.com/a-novel/couchbase-setup/master/old.sh -L -O >/dev/null 2>&1 && sh old.sh > old.txt
+rm old.sh
+
+grep -Ffvx old.txt ~/.bash_profile > tmp && mv tmp ~/.bash_profile
+grep -Ffvx old.txt ~/.zshrc > tmp && mv tmp ~/.zshrc
+rm old.txt
 
 if ! grep -Fxq "$exportPath" ~/.bash_profile; then
   echo "$exportPath" >>~/.bash_profile
