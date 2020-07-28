@@ -1,5 +1,6 @@
 #!/bin/sh
 
+
 alias="alias couchbase-jc='sh ~/bin/couchbase-jc/setup-couchbase.sh'"
 exportPath='export PATH="~/bin:$PATH"'
 
@@ -9,26 +10,31 @@ printf "Installing dependencies..."
 
 installer=""
 
-if ! command -v apt-get >/dev/null; then
-  installer="sudo apt-get install"
-elif ! command -v dnf >/dev/null; then
-  installer="sudo dnf install"
-elif ! command -v zypper >/dev/null; then
-  installer="sudo zypper install"
-elif ! command -v pacman >/dev/null; then
-  installer="sudo pacman -S"
-elif ! command -v brew >/dev/null; then
-  installer="brew install"
-elif ! command -v port >/dev/null; then
-  installer="port install"
-fi
+commands[0]="apt-get"
+commands[1]="dnf"
+commands[2]="zypper"
+commands[3]="pacman"
+commands[4]="brew"
+
+for com in "${commands[@]}"
+do
+    command -v "${com}"
+    if [ $? -eq 0 ]
+    then
+        installer="${com} install"
+        break
+    fi
+done
+
 printf "\r\033[K"
 
-if ! required_cmd="$(type "jq")" || [ -z "$required_cmd" ]; then
-  if [ -n "$installer" ]; then
+command -v "jq"
+if [ $? -eq 1 ] ; then
+  if [ -n "${installer}" ]; then
     eval "${installer} jq"
   else
     printf "\033[0;31mCouldn't find any available installer. Install jq on your own, from https://stedolan.github.io/jq/download/\033[0m\n"
+    exit 1
   fi
 fi
 
