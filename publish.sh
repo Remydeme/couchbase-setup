@@ -22,11 +22,11 @@ if [ -z "$Version" ]; then
   exit
 fi
 
+echo "{\"version\": \"${Version}\"}" > "${DIR}/meta.json"
+
 git add .
 git commit -m "$Commit"
 git push
 
 git tag "$Version"
 git push --tags
-
-echo "{\"version\": \"${Version}\"}" > "${DIR}/meta.json"
